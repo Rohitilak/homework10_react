@@ -20,23 +20,21 @@ const Translator = () => {
                 code,
                 name: languages[code].name
             }));
+
             setSupportedLanguages(languageList);
         } catch (error) {
             console.error('Error fetching supported languages:', error);
         }
     };
-
     useEffect(() => {
         fetchSupportedLanguages();
     }, []);
 
-    
     const translateText = async () => {
         if (!sourceLanguage || !targetLanguage) {
             alert('Please select languages.');
             return;
         }
-
 
         const encodedParams = new URLSearchParams();
         encodedParams.set('source_language', sourceLanguage);
@@ -44,30 +42,31 @@ const Translator = () => {
         encodedParams.set('text', inputText);
 
         const options = {
-          method: 'POST',
-          url: 'https://text-translator2.p.rapidapi.com/translate',
-          headers: {
+        method: 'POST',
+        url: 'https://text-translator2.p.rapidapi.com/translate',
+        headers: {
             'content-type': 'application/x-www-form-urlencoded',
-            'X-RapidAPI-Key': '0e63126efemsh33fe260b0732ab4p12d47djsnff97bf5b9423',
+            'X-RapidAPI-Key': '82bdd611a9mshdf00ae03b558d75p153becjsn343ba8de47c7',
             'X-RapidAPI-Host': 'text-translator2.p.rapidapi.com'
-          },
-          data: encodedParams,
+        },
+        data: encodedParams,
         };
 
         try {
-          const response = await axios.request(options);
+            const response = await axios.request(options);
           setTranslatedText(response.data.data.translatedText);
         } catch (error) {
-          console.error(error);
+            console.error(error);
         }
-    };
+
+    }
 
     return (
-        <div className="translator-container">
+        <div className="translator">
             <h1>Language Translator</h1>
-            <div className="language-selectors">
+            <div className="selectors">
                 <select
-                    className="language-dropdown"
+                    className="dropdown"
                     value={sourceLanguage}
                     onChange={(e) => setSourceLanguage(e.target.value)}
                 >
@@ -82,7 +81,7 @@ const Translator = () => {
                <div> <i class="fa-solid fa-right-left"></i></div>
 
                 <select
-                    className="language-dropdown"
+                    className="dropdown"
                     value={targetLanguage}
                     onChange={(e) => setTargetLanguage(e.target.value)}
                 >
@@ -95,15 +94,15 @@ const Translator = () => {
                 </select>
             </div>
             <textarea
-                className="input-textarea"
+                className="textarea"
                 value={inputText}
                 onChange={(e) => setInputText(e.target.value)}
             ></textarea>
-            <button className="translate-button" onClick={translateText}>
+            <button className="button" onClick={translateText}>
                 Translate
             </button>
-            <h2 className="translated-heading">Translated Text:</h2>
-            <p className="translated-text">{translatedText}</p>
+            <h2 className="heading">Translated Text:</h2>
+            <p className="text">{translatedText}</p>
         </div>
     );
 };
